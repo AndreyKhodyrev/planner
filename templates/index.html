@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <title>{{title}}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">Планировщик</a>
+        {% if current_user.is_authenticated %}
+        <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        {% else %}
+        <p>
+            <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+            <a class="btn btn-success" href="/login">Войти</a>
+        </p>
+        {% endif %}
+    </nav>
+</header>
+<div id="page">
+    <div id="leftSidebar">
+        <div id="category_header">
+            <div>
+                <b><p align="center" style=font-size:30px>Категории</p></b>
+            </div>
+            <div id="add"><p align="center"><a class="btn btn" href="/categories" style="height:50px;width:50px"><img
+                    src="static/img/plus-square.svg" width="32" height="32"></a></div>
+        </div>
+
+        <div id="task_buttons">
+            <p align="center"><a class="btn btn-light" role="button" href="../"
+                                 style="width:200px;font-size: 25px;border:2px solid grey;border-radius: 10px 10px;">Все
+                задачи</a></p>
+            {% for item in category%}
+            {% if current_user.id == item.user_id %}
+            <p align="center"><a class="btn btn-light" role="button" href={{item.id}}
+                                 style="width:200px;font-size: 25px;border:2px solid grey;border-radius: 10px 10px;">{{item.name}}</a>
+            </p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        </p>
+    </div>
+    <div class="create-line"></div>
+    <div id="main">
+        <div id="statistic">
+            <div id="best">
+                <div id="bord_smile">
+                    <div id="smile">
+                        <img src="static/img/emoji-smile.svg" width="60" height="60">
+                    </div>
+                </div>
+                <div id="info_smile">
+                    <div><font size="5">{{dct[0]}}/{{dct[3]}}</font></div>
+                    {% if dct[3] == 0 %}
+                    <div><font size="5">0%</font></div>
+                    {% else %}
+                    <div><font size="5">{{(dct[0]*100)//dct[3]}}%</font></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div id="medium">
+                <div id="bord_neutral">
+                    <div id="neutral">
+                        <img src="static/img/emoji-neutral.svg" width="60" height="60">
+                    </div>
+                </div>
+                <div id="info_neutral">
+                    <div><font size="5">{{dct[1]}}/{{dct[3]}}</font></div>
+                    {% if dct[3] == 0 %}
+                    <div><font size="5">0%</font></div>
+                    {% else %}
+                    <div><font size="5">{{(dct[1]*100)//dct[3]}}%</font></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div id="worst">
+                <div id="bord_frown">
+                    <div id="frown">
+                        <img src="static/img/emoji-frown.svg" width="60" height="60">
+                    </div>
+                </div>
+                <div id="info_frown">
+                    <div><font size="5">{{dct[2]}}/{{dct[3]}}</font></div>
+                    {% if dct[3] == 0 %}
+                    <div><font size="5">0%</font></div>
+                    {% else %}
+                    <div><font size="5">{{(dct[2]*100)//dct[3]}}%</font></div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        <div id="cap">
+            <div id="title">
+                <p><b><font size="6">{{name}}</font></b></p>
+            </div>
+            <div id="add_button"><a class="btn btn" href="/tasks/{{category_id}}"
+                                    style="height:50px;width:50px;">
+                <img src="static/img/plus-square.svg" width="32" height="32"></a>
+            </div>
+            <div id="download_button"><a class="btn btn" href="/download/{{category_id}}"
+                                         style="height:50px;width:50px;">
+                <img src="static/img/download.svg" width="32" height="32"></a>
+            </div>
+        </div>
+        {% for item in tasks%}
+        {% if current_user.id == item.user_id and (category_id == item.category_id or category_id == 0)%}
+        {% if item.is_complete == False and item.date < current_date %}
+        {% set col = "#f00" %}
+        {% elif item.is_complete == False %}
+        {% set col = "#ff0" %}
+        {% else %}
+        {% set col = "#0f0" %}
+        {% endif %}
+        <div id="tas">
+            <div id="bord" style="background-color:{{col}}"><p></p>
+            </div>
+            <div id="main_task">
+                {% if category_id == 0 %}
+                <div>
+                    {% for i in category %}
+                    {% if i.id == item.category_id %}
+                    <b><font size="5">{{i.name}}</font></b>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div>
+                    <font size="5"> {{item.task}}</font>
+                </div>
+            </div>
+            <div id="date_task">
+                <div>
+                    <b><font size="5">Дата</font></b>
+                </div>
+                <div>
+                    <font size="5">{{item.date.date()}}</font>
+                </div>
+            </div>
+            <div id="importance_task">
+                <div>
+                    <b><font size="5">Важность</font></b>
+                </div>
+                <div>
+                    <font size="5"> {{item.importance}}</font>
+                </div>
+            </div>
+            <div id="delete_button"><a class="btn btn" href="/tasks_delete/{{item.id}}/{{category_id}}"
+                                       style="height:50px;width:50px;margin-top:37%">
+                <img src="static/img/trash3.svg" width="32" height="32" align="middle" id="delete_img">
+            </a></div>
+            <div id="change_button"><a class="btn btn" href="/tasks/{{item.id}}/{{category_id}}"
+                                       style="height:50px;width:50px;margin-top:37%">
+                <img src="static/img/pencil-square.svg" width="32" height="32"></a>
+            </div>
+            {% set surc = "static/img/square.svg" %}
+            {% if item.is_complete == True %}
+            {% set surc = "static/img/check-square.svg" %}
+            {% endif %}
+            <div id="complete_button"><a class="btn btn" href="/complete/{{item.id}}/{{category_id}}"
+                                         style="height:50px;width:50px;margin-top:37%">
+                <img src={{surc}} width="32" height="32"></a>
+            </div>
+        </div>
+        <small><h6></h6></small>
+        {% endif %}
+        {% endfor %}
+        {% if sz == 0 %}
+        <font size="8">Здесь пока нет задач(</font>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

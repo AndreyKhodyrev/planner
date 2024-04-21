@@ -1,0 +1,153 @@
+#page{
+    display: flex;
+}
+#leftSidebar{
+    float: left;
+    width: 250px;
+    height: 800px;
+    margin-top:20px;
+    margin-left: 20px;
+}
+.create-line {
+    height: 850px;
+    width:3px;
+    margin-top:20px;
+    border-left: 3px solid grey;
+}
+#main{
+    margin-left: 25px;
+    margin-right: 20px;
+    margin-top:20px;
+    height: 800px;
+}
+#tas{
+    display: flex;
+    box-sizing: border-box;
+    border:2px solid grey;
+    border-radius: 10px 10px;
+}
+#bord{
+    float:left;
+    height:84px;
+    width: 50px;
+    border-radius: 8px 8px;
+}
+#main_task{
+    margin-left: 5px;
+    width:950px;
+    vertical-align: middle;
+}
+#date_task{
+    width: 200px;
+}
+#importance_task{
+    width:200px;
+}
+#delete_button{
+}
+#change_button{
+    margin-left: 10px;
+}
+#complete_button{
+    margin-left: 10px;
+}
+#cap{
+    display:flex;
+    width:1600px;
+
+}
+#title{
+    width:1467px;
+}
+#add_button{
+    width:50px;
+}
+#download_button{
+    width:50px;
+    margin-left: 10px;
+}
+
+#statistic{
+    display: flex;
+}
+#best{
+    display: flex;
+    border-radius: 8px 8px;
+    width:200px;
+    height:80px;
+    margin-left:270px;
+    border:2px solid grey;
+}
+#medium{
+    display: flex;
+    border-radius: 8px 8px;
+    width:200px;
+    height:80px;
+    margin-left: auto;
+    margin-right: auto;
+    border:2px solid grey;
+}
+#worst{
+    display: flex;
+    border-radius: 8px 8px;
+    width:200px;
+    height:80px;
+    margin-right:270px;
+    border:2px solid grey;
+}
+
+#smile{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#neutral{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#frown{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#bord_smile{
+    display: flex;
+    background-color: #0f0;
+    border-radius: 6px 6px;
+    width:76px;
+    height:76px;
+}
+#bord_neutral{
+    display: flex;
+    background-color: #ff0;
+    border-radius: 6px 6px;
+    width:76px;
+    height:76px;
+}
+#bord_frown{
+    display: flex;
+    background-color: #f00;
+    border-radius: 6px 6px;
+    width:76px;
+    height:76px;
+}
+#info_smile{
+    margin-left:35px;
+}
+
+#info_neutral{
+    margin-left:35px;
+}
+
+#info_frown{
+    margin-left:35px;
+}
+#category_header{
+    width: 250px;
+    display: flex;
+    margin-left: 25px;
+}
