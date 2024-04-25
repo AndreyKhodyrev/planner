@@ -45,7 +45,7 @@ def index1():
         sz = 0
     date = datetime.datetime.now()
     date -= datetime.timedelta(days=1)
-    lst = get('http://127.0.0.1:5000/api/tasks').json()['tasks']
+    lst = get('http://127.0.0.1:8080/api/tasks').json()['tasks']
     dct = [0, 0, 0]
     try:
         for item in lst:
@@ -73,9 +73,10 @@ def index(category_id):
         sz = len(tasks.filter(Tasks.user_id == current_user.id, Tasks.category_id == int(category_id)).all())
     except:
         sz = 0
+        return abort(404)
     date = datetime.datetime.now()
     date -= datetime.timedelta(days=1)
-    lst = get('http://127.0.0.1:5000/api/tasks').json()['tasks']
+    lst = get('http://127.0.0.1:8080/api/tasks').json()['tasks']
     dct = [0, 0, 0]
     try:
         for item in lst:
@@ -90,9 +91,9 @@ def index(category_id):
     except:
         pass
     dct.append(sum(dct))
+    name = db_sess.query(Category).filter(Category.id == int(category_id)).first().name
     return render_template("index.html", tasks=tasks, category=category, category_id=int(category_id),
-                           name=db_sess.query(Category).filter(Category.id == int(category_id)).first().name,
-                           current_date=date, sz=sz, dct=dct)
+                           name=name, current_date=date, sz=sz, dct=dct)
 
 
 @app.route('/tasks_delete/<int:id>/<int:category_id>', methods=['GET', 'POST'])
@@ -301,7 +302,7 @@ def logout():
 def main():
     db_session.global_init("db/planner.db")
     api.add_resource(tasks_resources.TasksListResource, '/api/tasks')
-    app.run()
+    app.run(host='0.0.0.0', port=8080)
 
 
 if __name__ == '__main__':
